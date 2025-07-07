@@ -44,9 +44,9 @@ model User {
   createdAt      DateTime       @default(now()) @db.Timestamp()
   updatedAt      DateTime       @default(now()) @updatedAt @db.Timestamp()
 
-  UserToken            UserToken[]
+  UserToken           UserToken[]
   ForgotPasswordToken ForgotPasswordToken[]
-  ProductRating        ProductRating[]
+  ProductRating       ProductRating[]
   Wishlist            Wishlist[]
   Cart                Cart[]
 }
@@ -81,8 +81,8 @@ model Product {
   updatedAt   DateTime @default(now()) @updatedAt @db.Timestamp()
 
   ProductRating ProductRating[]
-  Wishlist     Wishlist[]
-  Cart         Cart[]
+  Wishlist      Wishlist[]
+  Cart          Cart[]
   ProductSize   ProductSize[]
 }
 
