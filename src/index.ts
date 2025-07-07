@@ -1,9 +1,21 @@
-import { Hono } from 'hono'
+import { Hono } from "hono";
+import { authRoute } from "./routes/auth";
+import { profileRoute } from "./routes/profile";
+import { userRoute } from "./routes/user";
+import { productRoute } from "./routes/product";
+import { cartRoute } from "./routes/cart";
+import { orderRoute } from "./routes/order";
 
-const app = new Hono()
+const app = new Hono().basePath('/v1');
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+app.route('/auth', authRoute);
+app.route('/profile', profileRoute);
+app.route('/user', userRoute);
+app.route('/product', productRoute);
+app.route('/cart', cartRoute);
+app.route('/order', orderRoute);
 
-export default app
+export default {
+  port: 8000,
+  fetch: app.fetch,
+}
