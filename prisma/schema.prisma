@@ -45,10 +45,10 @@ model User {
   updatedAt      DateTime       @default(now()) @updatedAt @db.Timestamp()
 
   UserToken            UserToken[]
-  ForgotPasswordTokens ForgotPasswordTokens[]
+  ForgotPasswordToken ForgotPasswordToken[]
   ProductRating        ProductRating[]
-  Wishlists            Wishlists[]
-  Carts                Carts[]
+  Wishlist            Wishlist[]
+  Cart                Cart[]
 }
 
 model UserToken {
@@ -62,7 +62,7 @@ model UserToken {
   User   User @relation(fields: [userId], references: [id])
 }
 
-model ForgotPasswordTokens {
+model ForgotPasswordToken {
   id        Int      @id
   urlToken  String
   expiredAt DateTime @db.Timestamp()
@@ -81,8 +81,8 @@ model Product {
   updatedAt   DateTime @default(now()) @updatedAt @db.Timestamp()
 
   ProductRating ProductRating[]
-  Wishlists     Wishlists[]
-  Carts         Carts[]
+  Wishlist     Wishlist[]
+  Cart         Cart[]
   ProductSize   ProductSize[]
 }
 
@@ -120,7 +120,7 @@ model ProductRating {
   Product   Product @relation(fields: [productId], references: [id])
 }
 
-model Wishlists {
+model Wishlist {
   id Int @id
 
   userId Int
@@ -130,7 +130,7 @@ model Wishlists {
   Product   Product @relation(fields: [productId], references: [id])
 }
 
-model Carts {
+model Cart {
   id       Int @id
   quantity Int
 
@@ -141,7 +141,7 @@ model Carts {
   Product   Product @relation(fields: [productId], references: [id])
 }
 
-model Attachments {
+model Attachment {
   id        Int      @id
   table     String
   table_id  Int
