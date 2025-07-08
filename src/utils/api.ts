@@ -8,17 +8,25 @@ interface PaginationParams {
   limit: number;
 }
 
-export const createPaginationParams = <T extends string = '/'>(req: HonoRequest<T, {}>): PaginationParams => ({
+const DEFAULT_MESSAGE = "Success";
+
+export const createPaginationParams = <T extends string = '/'>(
+  req: HonoRequest<T, {}>
+): PaginationParams => ({
   page: (req.query('page') as unknown as number) || 1,
   limit: (req.query('limit') as unknown as number) || 15,
 })
 
-export const createResponse = <T>(data: T, message: string): Response<T> => ({
+export const createResponse = <T>(data: T, message: string = DEFAULT_MESSAGE): Response<T> => ({
   message,
   data,
 });
 
-export const createResponsePagination = <T>(data: T, meta: PageNumberPaginationMeta & PageNumberCounters, message: string): ResponsePagination<T> => {
+export const createResponsePagination = <T>(
+  data: T,
+  meta: PageNumberPaginationMeta & PageNumberCounters,
+  message: string = DEFAULT_MESSAGE
+): ResponsePagination<T> => {
   return {
     message,
     meta: {
@@ -32,7 +40,11 @@ export const createResponsePagination = <T>(data: T, meta: PageNumberPaginationM
   };
 }
 
-export const createResponseCursor = <T>(data: T, meta: CursorPaginationMeta, message: string): ResponseCursor<T> => {
+export const createResponseCursor = <T>(
+  data: T,
+  meta: CursorPaginationMeta,
+  message: string = DEFAULT_MESSAGE
+): ResponseCursor<T> => {
   return {
     message,
     meta: {
