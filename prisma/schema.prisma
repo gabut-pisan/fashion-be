@@ -32,9 +32,10 @@ enum DiscountType {
 }
 
 model User {
-  id             Int            @id
+  id             Int            @id @default(autoincrement())
   name           String
   email          String         @unique
+  phone          String
   placebirth     String
   datebirth      DateTime
   address        String         @db.Text
@@ -52,7 +53,7 @@ model User {
 }
 
 model UserToken {
-  id           Int      @id
+  id           Int      @id @default(autoincrement())
   accessToken  String
   refreshToken String
   expiredAt    DateTime @db.Timestamp()
@@ -63,7 +64,7 @@ model UserToken {
 }
 
 model ForgotPasswordToken {
-  id        Int      @id
+  id        Int      @id @default(autoincrement())
   urlToken  String
   expiredAt DateTime @db.Timestamp()
   createdAt DateTime @default(now()) @db.Timestamp()
@@ -74,7 +75,7 @@ model ForgotPasswordToken {
 }
 
 model Product {
-  id          Int      @id
+  id          Int      @id @default(autoincrement())
   name        String
   description String   @db.Text
   createdAt   DateTime @default(now()) @db.Timestamp()
@@ -87,17 +88,18 @@ model Product {
 }
 
 model Size {
-  id          Int           @id
-  name        String
+  id   Int    @id @default(autoincrement())
+  name String
+
   ProductSize ProductSize[]
 }
 
 model ProductSize {
-  id            Int          @id
+  id            Int          @id @default(autoincrement())
   quantity      Int
   price         Int
-  discountType  DiscountType
-  discountValue Int
+  discountType  DiscountType?
+  discountValue Int?
 
   sizeId Int
   Size   Size @relation(fields: [sizeId], references: [id])
@@ -107,9 +109,9 @@ model ProductSize {
 }
 
 model ProductRating {
-  id          Int      @id
+  id          Int      @id @default(autoincrement())
   description String   @db.Text
-  rate        Bytes
+  rate        Int      @db.SmallInt
   createdAt   DateTime @default(now()) @db.Timestamp()
   updatedAt   DateTime @default(now()) @updatedAt @db.Timestamp()
 
@@ -121,7 +123,7 @@ model ProductRating {
 }
 
 model Wishlist {
-  id Int @id
+  id Int @id @default(autoincrement())
 
   userId Int
   User   User @relation(fields: [userId], references: [id])
@@ -131,7 +133,7 @@ model Wishlist {
 }
 
 model Cart {
-  id       Int @id
+  id       Int @id @default(autoincrement())
   quantity Int
 
   userId Int
@@ -142,7 +144,7 @@ model Cart {
 }
 
 model Attachment {
-  id        Int      @id
+  id        Int      @id @default(autoincrement())
   table     String
   table_id  Int
   url       String   @db.Text
