@@ -61,27 +61,27 @@ const seedSizes = async () => await prisma.$transaction([
       create: { name: 'xs' },
     }),
     client.size.upsert({
-      where: { id: 1, name: 'sm' },
+      where: { id: 2, name: 'sm' },
       update: { name: 'sm' },
       create: { name: 'sm' },
     }),
     client.size.upsert({
-      where: { id: 1, name: 'md' },
+      where: { id: 3, name: 'md' },
       update: { name: 'md' },
       create: { name: 'md' },
     }),
     client.size.upsert({
-      where: { id: 1, name: 'lg' },
+      where: { id: 4, name: 'lg' },
       update: { name: 'lg' },
       create: { name: 'lg' },
     }),
     client.size.upsert({
-      where: { id: 1, name: 'xl' },
+      where: { id: 5, name: 'xl' },
       update: { name: 'xl' },
       create: { name: 'xl' },
     }),
     client.size.upsert({
-      where: { id: 1, name: 'xxl' },
+      where: { id: 6, name: 'xxl' },
       update: { name: 'xxl' },
       create: { name: 'xxl' },
     })
