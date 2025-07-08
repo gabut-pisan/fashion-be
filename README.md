@@ -10,6 +10,9 @@
 ## Development Guide
 > Guide ini bertujuan untuk menjaga codebase agar tetap konsisten. Gunakan dengan sebaik mungkin.
 
+### Membuat pagination params untuk pagination `withPages()`
+Gunakan function `createPaginationParams()` dengan parameter dari `context.req` milik hono.
+
 ### Return response
 Ketika kita hendak return response data, maka kita perlu memanggil salah satu dari 3 function yang disimpan di dalam `/src/utils/api.ts`:
 1. `createResponseMessage()`, return response berisi message saja
