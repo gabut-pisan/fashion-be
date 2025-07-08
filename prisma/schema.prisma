@@ -1,0 +1,153 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  male
+  female
+}
+
+enum RegisterMethod {
+  jwt
+  google
+  facebook
+  github
+}
+
+enum DiscountType {
+  amount
+  percent
+}
+
+model User {
+  id             Int            @id
+  name           String
+  email          String         @unique
+  placebirth     String
+  datebirth      DateTime
+  address        String         @db.Text
+  gender         Gender
+  password       String
+  registerMethod RegisterMethod
+  createdAt      DateTime       @default(now()) @db.Timestamp()
+  updatedAt      DateTime       @default(now()) @updatedAt @db.Timestamp()
+
+  UserToken           UserToken[]
+  ForgotPasswordToken ForgotPasswordToken[]
+  ProductRating       ProductRating[]
+  Wishlist            Wishlist[]
+  Cart                Cart[]
+}
+
+model UserToken {
+  id           Int      @id
+  accessToken  String
+  refreshToken String
+  expiredAt    DateTime @db.Timestamp()
+  createdAt    DateTime @default(now()) @db.Timestamp()
+
+  userId Int
+  User   User @relation(fields: [userId], references: [id])
+}
+
+model ForgotPasswordToken {
+  id        Int      @id
+  urlToken  String
+  expiredAt DateTime @db.Timestamp()
+  createdAt DateTime @default(now()) @db.Timestamp()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp()
+
+  userId Int
+  User   User @relation(fields: [userId], references: [id])
+}
+
+model Product {
+  id          Int      @id
+  name        String
+  description String   @db.Text
+  createdAt   DateTime @default(now()) @db.Timestamp()
+  updatedAt   DateTime @default(now()) @updatedAt @db.Timestamp()
+
+  ProductRating ProductRating[]
+  Wishlist      Wishlist[]
+  Cart          Cart[]
+  ProductSize   ProductSize[]
+}
+
+model Size {
+  id          Int           @id
+  name        String
+  ProductSize ProductSize[]
+}
+
+model ProductSize {
+  id            Int          @id
+  quantity      Int
+  price         Int
+  discountType  DiscountType
+  discountValue Int
+
+  sizeId Int
+  Size   Size @relation(fields: [sizeId], references: [id])
+
+  productId Int
+  Product   Product @relation(fields: [productId], references: [id])
+}
+
+model ProductRating {
+  id          Int      @id
+  description String   @db.Text
+  rate        Bytes
+  createdAt   DateTime @default(now()) @db.Timestamp()
+  updatedAt   DateTime @default(now()) @updatedAt @db.Timestamp()
+
+  userId Int
+  User   User @relation(fields: [userId], references: [id])
+
+  productId Int
+  Product   Product @relation(fields: [productId], references: [id])
+}
+
+model Wishlist {
+  id Int @id
+
+  userId Int
+  User   User @relation(fields: [userId], references: [id])
+
+  productId Int
+  Product   Product @relation(fields: [productId], references: [id])
+}
+
+model Cart {
+  id       Int @id
+  quantity Int
+
+  userId Int
+  User   User @relation(fields: [userId], references: [id])
+
+  productId Int
+  Product   Product @relation(fields: [productId], references: [id])
+}
+
+model Attachment {
+  id        Int      @id
+  table     String
+  table_id  Int
+  url       String   @db.Text
+  type      String
+  size      Int
+  createdAt DateTime @default(now()) @db.Timestamp()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp()
+}
