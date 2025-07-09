@@ -11,11 +11,11 @@
 > Guide ini bertujuan untuk menjaga codebase agar tetap konsisten. Gunakan dengan sebaik mungkin.
 
 ### Membuat pagination params untuk pagination `withPages()`
-Gunakan function `createPaginationParams()` dengan parameter dari `context.req` milik hono.
+Gunakan function `createPaginationParams()`.
 
 ### Return response
 Ketika kita hendak return response data, maka kita perlu memanggil salah satu dari 3 function yang disimpan di dalam `/src/utils/api.ts`:
-1. `createResponseMessage()`, return response berisi message saja
-2. `createResponse()`, return response dengan 1 data atau multiple tanpa pagination
-3. `createResponsePagination()`, return response dengan page-based pagination
-4. `createResponseCursor()`, return response dengan cursor pagination
+1. `responseMessage()`, return response berisi message saja
+2. `response()`, return response dengan 1 data atau multiple tanpa pagination
+3. `responsePagination()`, return response dengan page-based pagination
+4. `responseCursor()`, return response dengan cursor pagination
