@@ -1,31 +1,32 @@
 import { Hono } from "hono";
-import { prisma } from "../prisma";
-import { createPaginationParams, createResponse, createResponsePagination } from "../utils/api";
+import { response, responsePagination } from "../utils/api";
+import { zValidator } from "@hono/zod-validator";
+import { object, string } from "zod/v4";
+import { productRepository } from "../repositories/productRepository";
 
-export const productRoute = new Hono();
+export const productApp = new Hono();
 
-productRoute.get('/', async ({ json, req }) => {
-  const [products, meta] = await prisma.product
-    .paginate()
-    .withPages(createPaginationParams(req));
+productApp.get(
+  '/',
+  zValidator('query', object({
+    page: string().optional(),
+    limit: string().optional(),
+  })),
+  async ({ json, req }) => {
+    const query = req.valid('query');
+    const [products, meta] = await productRepository.paginate(query);
+    return json(responsePagination(products, meta));
+  }
+);
 
-  return json(
-    createResponsePagination(products, meta, "Products taken successfully")
-  );
-});
-
-productRoute.get('/:id', async ({ json, req }) => {
-  console.log(req.param('id'));
-  const id = +req.param('id');
-  const res = await prisma.product.findFirst({
-    where: {
-      id,
-    }
-  });
-
-  return json(createResponse(res));
-});
-
-productRoute.post('/add/cart', ({ json }) => { return json({}) });
-
-productRoute.post('/add/wishlist', ({ json }) => { return json({}) });
+productApp.get(
+  '/:id',
+  zValidator('param', object({
+    id: string(),
+  })),
+  async ({ json, req }) => {
+    const param = req.valid('param');
+    const res = await productRepository.getById(+param.id);
+    return json(response(res));
+  }
+);

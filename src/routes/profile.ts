@@ -1,11 +1,7 @@
 import { Hono } from "hono";
 
-export const profileRoute = new Hono();
+export const profileApp = new Hono();
 
-profileRoute.get('/', ({ json }) => { return json({}) });
+profileApp.get('/', ({ json }) => { return json({}) });
 
-profileRoute.post('/change-password', ({ json }) => { return json({}) });
-
-profileRoute.get('/wishlist', ({ json }) => { return json({}) });
-
-profileRoute.delete('/wishlist/:product_id', ({ json }) => { return json({}) });
+profileApp.post('/change-password', ({ json }) => { return json({}) });

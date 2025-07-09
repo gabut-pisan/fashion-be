@@ -1,5 +1,5 @@
 import { Hono } from "hono";
 
-export const userRoute = new Hono();
+export const userApp = new Hono();
 
-userRoute.get('/:id', ({ json }) => { return json({}) });
+userApp.get('/:id', ({ json }) => { return json({}) });
