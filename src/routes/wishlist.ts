@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { bearerAuth } from 'hono/bearer-auth'
+// import { bearerAuth } from 'hono/bearer-auth'
 import { zValidator } from "@hono/zod-validator";
 import { number, object, string } from "zod/v4";
 import { wishlistRepository } from "../repositories/wishlistRepository";
@@ -8,7 +8,7 @@ import { response, responseMessage, responsePagination } from "../utils/api";
 
 export const wishlistApp = new Hono();
 
-wishlistApp.use(bearerAuth({ token: wishlistApp.route }))
+// wishlistApp.use(bearerAuth({ token: wishlistA'test }))
 
 wishlistApp.get(
   '/',
