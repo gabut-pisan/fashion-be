@@ -1,32 +1,24 @@
 import { CursorPaginationMeta, PageNumberPaginationMeta } from "prisma-extension-pagination";
-import { Response, ResponseCursor, ResponseMessage, ResponsePagination } from "../interfaces/general/api";
+import { PaginationParams, PaginationResponse, Response, ResponseCursor, ResponseMessage, ResponsePagination } from "../interfaces/general/api";
 import { PageNumberCounters } from "prisma-extension-pagination/dist/types";
-import { HonoRequest } from "hono";
-
-interface PaginationParams {
-  page: number;
-  limit: number;
-}
 
 const DEFAULT_MESSAGE = "Success";
 
-export const createPaginationParams = <T extends string = '/'>(
-  req: HonoRequest<T, {}>
-): PaginationParams => ({
-  page: (req.query('page') as unknown as number) || 1,
-  limit: (req.query('limit') as unknown as number) || 15,
+export const createPaginationParams = ({ page, limit }: PaginationParams): PaginationResponse => ({
+  page: typeof page === 'string' ? +page : page,
+  limit: typeof limit === 'string' ? +limit : limit,
 })
 
-export const createResponseMessage = (message: string = DEFAULT_MESSAGE): ResponseMessage => ({
+export const responseMessage = (message: string = DEFAULT_MESSAGE): ResponseMessage => ({
   message,
 });
 
-export const createResponse = <T>(data: T, message: string = DEFAULT_MESSAGE): Response<T> => ({
+export const response = <T>(data: T, message: string = DEFAULT_MESSAGE): Response<T> => ({
   message,
   data,
 });
 
-export const createResponsePagination = <T>(
+export const responsePagination = <T>(
   data: T,
   meta: PageNumberPaginationMeta & PageNumberCounters,
   message: string = DEFAULT_MESSAGE
@@ -44,7 +36,7 @@ export const createResponsePagination = <T>(
   };
 }
 
-export const createResponseCursor = <T>(
+export const responseCursor = <T>(
   data: T,
   meta: CursorPaginationMeta,
   message: string = DEFAULT_MESSAGE

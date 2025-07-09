@@ -1,11 +1,13 @@
 import { Hono } from "hono";
+import { userRepository } from "../repositories/userRepository";
+import { response } from "../utils/api";
 
-export const profileRoute = new Hono();
+export const profileApp = new Hono();
 
-profileRoute.get('/', ({ json }) => { return json({}) });
+profileApp.get('/', async ({ req, json }) => {
+  const token = req.header('Authorization');
+  const res = await userRepository.getByToken(token!);
+  return json(response(res))
+});
 
-profileRoute.post('/change-password', ({ json }) => { return json({}) });
-
-profileRoute.get('/wishlist', ({ json }) => { return json({}) });
-
-profileRoute.delete('/wishlist/:product_id', ({ json }) => { return json({}) });
+profileApp.post('/change-password', ({ json }) => { return json({}) });

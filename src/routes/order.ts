@@ -1,11 +1,11 @@
 import { Hono } from "hono";
 
-export const orderRoute = new Hono();
+export const orderApp = new Hono();
 
-orderRoute.get('/', ({ json }) => { return json({}) });
+orderApp.get('/', ({ json }) => { return json({}) });
 
-orderRoute.get('/:id', ({ json }) => { return json({}) });
+orderApp.get('/:id', ({ json }) => { return json({}) });
 
-orderRoute.post('/', ({ json }) => { return json({}) });
+orderApp.post('/', ({ json }) => { return json({}) });
 
-orderRoute.post('/callback', ({ json }) => { return json({}) });
+orderApp.post('/callback', ({ json }) => { return json({}) });

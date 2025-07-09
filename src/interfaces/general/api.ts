@@ -29,3 +29,14 @@ export interface ResponseCursor<T> {
   };
   data: T;
 }
+
+export interface PaginationParams {
+  page?: number | string;
+  limit?: number | string;
+  [key: string]: any;
+}
+
+export interface PaginationResponse {
+  page?: number;
+  limit?: number;
+}
