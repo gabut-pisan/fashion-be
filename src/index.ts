@@ -1,21 +1,21 @@
 import { Hono } from "hono";
-import { authRoute } from "./routes/auth";
-import { profileRoute } from "./routes/profile";
-import { userRoute } from "./routes/user";
-import { productRoute } from "./routes/product";
-import { cartRoute } from "./routes/cart";
-import { orderRoute } from "./routes/order";
+import { authApp } from "./routes/auth";
+import { profileApp } from "./routes/profile";
+import { userApp } from "./routes/user";
+import { productApp } from "./routes/product";
+import { cartApp } from "./routes/cart";
+import { orderApp } from "./routes/order";
 
-const app = new Hono().basePath('/v1');
+const app = new Hono().basePath('/api');
 
-app.route('/auth', authRoute);
-app.route('/profile', profileRoute);
-app.route('/user', userRoute);
-app.route('/product', productRoute);
-app.route('/cart', cartRoute);
-app.route('/order', orderRoute);
+app.route('/auth', authApp);
+app.route('/profile', profileApp);
+app.route('/user', userApp);
+app.route('/product', productApp);
+app.route('/cart', cartApp);
+app.route('/order', orderApp);
 
 export default {
-  port: 8000,
+  port: 8080,
   fetch: app.fetch,
 }
