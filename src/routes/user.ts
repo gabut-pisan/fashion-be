@@ -13,7 +13,9 @@ userApp.get(
   })),
   async ({ req, json }) => {
     const param = req.valid('param');
-    const res = await userRepository.getById(+param.id);
+    const res = await userRepository.find({
+      id: +param.id,
+    });
     return json(response(res));
   }
 );

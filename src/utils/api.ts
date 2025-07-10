@@ -4,16 +4,23 @@ import { PageNumberCounters } from "prisma-extension-pagination/dist/types";
 
 const DEFAULT_MESSAGE = "Success";
 
-export const createPaginationParams = ({ page, limit }: PaginationParams): PaginationResponse => ({
+export const createPaginationParams = (
+  { page, limit }: PaginationParams
+): PaginationResponse => ({
   page: typeof page === 'string' ? +page : page,
   limit: typeof limit === 'string' ? +limit : limit,
 })
 
-export const responseMessage = (message: string = DEFAULT_MESSAGE): ResponseMessage => ({
+export const responseMessage = (
+  message: string = DEFAULT_MESSAGE
+): ResponseMessage => ({
   message,
 });
 
-export const response = <T>(data: T, message: string = DEFAULT_MESSAGE): Response<T> => ({
+export const response = <T>(
+  data: T,
+  message: string = DEFAULT_MESSAGE
+): Response<T> => ({
   message,
   data,
 });

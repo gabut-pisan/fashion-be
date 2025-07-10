@@ -26,7 +26,9 @@ productApp.get(
   })),
   async ({ json, req }) => {
     const param = req.valid('param');
-    const res = await productRepository.getById(+param.id);
+    const res = await productRepository.find({
+      id: +param.id,
+    });
     return json(response(res));
   }
 );

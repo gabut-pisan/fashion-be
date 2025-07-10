@@ -6,7 +6,9 @@ export const profileApp = new Hono();
 
 profileApp.get('/', async ({ req, json }) => {
   const token = req.header('Authorization');
-  const res = await userRepository.getByToken(token!);
+  const res = await userRepository.find({
+    accessToken: token!,
+  });
   return json(response(res))
 });
 

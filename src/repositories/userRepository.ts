@@ -1,20 +1,23 @@
+import { Prisma } from "../../generated/prisma";
 import { prisma } from "../prisma"
 
-const getById = async (id: number) => await prisma.user.findUnique({
-  where: { id }
-});
-
-const getByToken = async (accessToken: string) => await prisma.user.findFirst({
+interface FindParams {
+  id?: number;
+  email?: string;
+  accessToken?: string;
+}
+const find = async ({ id, email, accessToken }: FindParams) => await prisma.user.findFirst({
   where: {
+    id,
+    email,
     UserToken: {
       every: {
         accessToken,
       }
     }
-  }
+  },
 });
 
 export const userRepository = {
-  getById,
-  getByToken,
+  find,
 };

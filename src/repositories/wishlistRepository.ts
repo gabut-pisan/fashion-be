@@ -2,6 +2,12 @@ import { prisma } from "../prisma"
 import { PaginationParams } from "../interfaces/general/api"
 import { createPaginationParams } from "../utils/api";
 
+interface FindParams {
+  id?: number;
+  productId?: number;
+  userId?: number;
+}
+
 interface CreateParams {
   userId: number;
   productId: number;
@@ -12,17 +18,14 @@ const paginate = async (paginate: PaginationParams) =>
     createPaginationParams(paginate)
   );
 
-const getById = async (id: number) =>
+const find = async (where: FindParams) =>
   await prisma.wishlist.findFirst({
-    where: { id }
+    where,
   });
 
-const create = async ({ productId, userId }: CreateParams) =>
+const create = async (data: CreateParams) =>
   await prisma.wishlist.create({
-    data: {
-      userId,
-      productId,
-    }
+    data,
   });
 
 const remove = async (id: number) =>
@@ -34,7 +37,7 @@ const remove = async (id: number) =>
 
 export const wishlistRepository = {
   paginate,
+  find,
   create,
   remove,
-  getById,
 }
