@@ -4,6 +4,9 @@ import { PageNumberCounters } from "prisma-extension-pagination/dist/types";
 
 const DEFAULT_MESSAGE = "Success";
 
+export const getAuthorizationToken = (authorizationHeader: string) =>
+  authorizationHeader.toLowerCase().split('bearer ')[1];
+
 export const createPaginationParams = (
   { page, limit }: PaginationParams
 ): PaginationResponse => ({

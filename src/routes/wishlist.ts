@@ -4,7 +4,8 @@ import { zValidator } from "@hono/zod-validator";
 import { number, object, string } from "zod/v4";
 import { wishlistRepository } from "../repositories/wishlistRepository";
 import { authRepository } from "../repositories/authRepository";
-import { response, responseMessage, responsePagination } from "../utils/api";
+import { getAuthorizationToken, response, responseMessage, responsePagination } from "../utils/api";
+import { userRepository } from "../repositories/userRepository";
 
 export const wishlistApp = new Hono();
 
@@ -30,12 +31,13 @@ wishlistApp.post(
   })),
   async ({ req, status, json }) => {
     const form = req.valid('form');
+    const accessToken = getAuthorizationToken(req.header('Authorization')!);
 
-    const token = await authRepository.validateToken(req.header('Authorization')!);
-    const res = await wishlistRepository.create({ userId: token?.userId!, productId: form.productId });
+    const user = await userRepository.find({ accessToken });
+    const res = await wishlistRepository.create({ userId: user!.id, productId: form.productId });
 
     status(201);
-    return json(response(res, "Product has been wishlisted"));
+    return json(response(res, "Product added to wishlist"));
   }
 );
 
